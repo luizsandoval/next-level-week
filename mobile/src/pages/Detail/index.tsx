@@ -10,7 +10,7 @@ import { RectButton } from 'react-native-gesture-handler';
 import * as MailComposer from 'expo-mail-composer';
 
 import { show as getPoint } from '../../services/points.service';
-import { PointDetail } from '../../models/pont-detail.model';
+import { PointDetail } from '../../models/point-detail.model';
 
 import Loading from '../../components/Loading';
 

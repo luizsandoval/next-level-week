@@ -18,6 +18,7 @@ const Home = () => {
     const [cities, setCities] = useState<string[]>([]);
     const [selectedUf, setSelectedUf] = useState<string>('');
     const [selectedCity, setSelectedCity] = useState<string>('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigation = useNavigation();
 
@@ -29,8 +30,6 @@ const Home = () => {
             }
         );
 
-    const isLoading = () => selectedUf && !cities?.length;
-
     const isValid = () => !!(selectedCity && selectedUf);
 
     useEffect(() => {
@@ -39,10 +38,13 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-        setCities([]);
+        setIsLoading(true);
         if (selectedUf) {
             getCities(selectedUf)
-                .then(setCities)
+                .then(res => {
+                    setCities(res);
+                    setIsLoading(false)
+                });
         }
     }, [selectedUf]);
 
@@ -93,7 +95,7 @@ const Home = () => {
                         Cidade*
                     </Text>
                     {
-                        isLoading() 
+                        !isLoading 
                         ? (
                             <PickerSelect 
                                 onValueChange={(city: string) => setSelectedCity(city)}

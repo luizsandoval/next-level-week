@@ -1,7 +1,7 @@
 import api from './api';
 
 import { Point } from '../models/point.model';
-import { PointDetail } from '../models/pont-detail.model';
+import { PointDetail } from '../models/point-detail.model';
 
 export const index = async (city = '', uf = '', items: number[] = []) => await api
     .get<Point[]>('points', {

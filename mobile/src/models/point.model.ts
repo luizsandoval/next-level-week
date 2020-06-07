@@ -1,5 +1,3 @@
-import { Item } from './item.model';
-
 export interface Point {
     id: number;
     image?: string;
@@ -10,5 +8,4 @@ export interface Point {
     city: string;
     whatsapp: string;
     email: string;
-    items?: Item[];
 }
