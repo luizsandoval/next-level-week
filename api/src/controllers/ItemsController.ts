@@ -11,7 +11,7 @@ class ItemsController {
                 {
                     id: item.id,
                     title: item.title,
-                    image_url: `${process.env.UPLOADS_URL}/${item.image}`
+                    image_url: `${process.env.UPLOADS_URL}/svg/${item.image}`
                 }
         ));
 

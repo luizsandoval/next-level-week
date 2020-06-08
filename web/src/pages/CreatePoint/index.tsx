@@ -12,6 +12,8 @@ import { getCities, getStates } from 'services/ibge.service';
 import { Item } from 'models/item.model';
 import { Point } from 'models/point.model';
 
+import Dropzone from 'components/Dropzone';
+
 import logo from 'assets/logo.svg';
 
 import './styles.css';
@@ -25,6 +27,7 @@ const CreatePoint = () => {
 
     const [selectedUf, setSelectedUF] = useState('0');
     const [selectedCity, setSelectedCity] = useState('0');
+    const [selectedFile, setSelectedFile] = useState<File>();
     const [selectedItems, setSelectedItems] = useState<number[]>([]);
     const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0]);
 
@@ -100,18 +103,20 @@ const CreatePoint = () => {
 
         const [latitude, longitude] = selectedPosition;
 
-        const point: Point = {
-            name: formData.name,
-            email: formData.email,
-            whatsapp: formData.whatsapp,
-            city: selectedCity,
-            uf: selectedUf,
-            items: selectedItems,
-            latitude,
-            longitude,
-        };
+        const data = new FormData();
 
-        create(point);
+        data.append('name', formData.name);
+        data.append('email', formData.email);
+        data.append('whatsapp', formData.whatsapp);
+        data.append('city', selectedCity);
+        data.append('uf', selectedUf);
+        data.append('items', selectedItems.join(','));
+        data.append('latitude', String(latitude));
+        data.append('longitude', String(longitude));
+
+        if (selectedFile) data.append('image', selectedFile);
+
+        create(data);
     };
 
     return (        
@@ -125,6 +130,8 @@ const CreatePoint = () => {
             </header>
             <form onSubmit={handleSubmit}>
                 <h1>Cadastro do <br/> ponto de coleta</h1>
+
+                <Dropzone onFileUploaded={setSelectedFile} />
 
                 <fieldset>
                     <legend>
